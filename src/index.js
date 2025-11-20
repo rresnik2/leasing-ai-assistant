@@ -7,9 +7,12 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-
 export default {
-	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
-	},
+  async fetch(request, env) {
+    const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+      prompt: "What does a leasing CRM do?",
+    });
+
+    return new Response(JSON.stringify(response));
+  },
 };
